@@ -1,0 +1,5 @@
+title: Dlang Tour
+start: welcome/welcome-to-d
+repo: dlang-tour/korean
+ordering:
+- welcome
