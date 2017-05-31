@@ -4,6 +4,8 @@ For a simple hello world program in D, `import`s are needed.
 The `import` statement makes all public functions
 and types from the given **module** available.
 
+D로 간단한 hello world 프로그램을 작성하려면 `import`문이 필요합니다. `import`문은 주어진 **모듈**내의 공용 함수와 타입들을 사용할 수있게 해줍니다.
+
 The standard library, called [Phobos](https://dlang.org/phobos/),
 is located under the **package** `std`
 and its modules are referenced through `import std.MODULE`.
