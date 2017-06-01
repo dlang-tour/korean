@@ -1,13 +1,8 @@
-# Basic types
+# 기본 자료형
 
-D provides a number of basic types which always have the same
-size **regardless** of the platform - the only exception
-is the `real` type which provides the highest possible floating point
-precision. There is no difference
-between the size of an integer regardless of whether the application
-is compiled for 32-bit or 64-bit systems.
+D는 플랫폼에 **관계없이** 항상 동일한 크기를 가진 여러 기본 자료형을 제공합니다. 예외는 가능한 가장 높은 부동 소수점 정밀도를 제공하는 real 자료형입니다. 응용 프로그램이 32 비트 또는 64 비트 시스템 용으로 컴파일되는지 여부에 관계없이 정수의 크기에는 차이가 없습니다.
 
-| type                          | size
+| 자료형                          | 크기
 |-------------------------------|------------
 |`bool`                         | 8-bit
 |`byte`, `ubyte`, `char`        | 8-bit
@@ -15,22 +10,17 @@ is compiled for 32-bit or 64-bit systems.
 |`int`, `uint`, `dchar`         | 32-bit
 |`long`, `ulong`                | 64-bit
 
-#### Floating point types:
+#### 부동 소수점 자료형:
 
-| type    | size
+| 자료형    | 크기
 |---------|--------------------------------------------------
 |`float`  | 32-bit
 |`double` | 64-bit
 |`real`   | >= 64-bit (generally 64-bit, but 80-bit on Intel x86 32-bit)
 
-The prefix `u` denotes *unsigned* types. `char` translates to
-UTF-8 characters, `wchar` is used in UTF-16 strings and `dchar`
-in UTF-32 strings.
+접두사  `u` 는 *부호없는* 자료형을 나타냅니다. `char`는 UTF-8 문자, `wchar`은 UTF-16 문자열, `dchar`는 UTF-32 문자열에서 사용됩니다.
 
-A conversion between variables of different types is only
-allowed by the compiler if no precision is lost. However,
-a conversion between floating point types
-(e.g `double` to `float`) is allowed.
+다른 자료형의 변수 간 변환은 정밀도가 손실되지 않을 경우에만 컴파일러에서 허용됩니다. 그러나 부동 소수점 자료형 간의 변환(예 : `double`에서 `float`)은 허용됩니다.
 
 A conversion to another type may be forced by using the
 `cast(TYPE) myVar` expression. It needs to be used with great care though,
