@@ -1,6 +1,6 @@
 # 다른 언어로도 보기
 
-D 언어 강좌는 여러 참여자들의 덕분에, 한국어 외의 다양한 언어로도 볼 수 있습니다.
+D 언어 강좌는 여러 참여자들 덕분에, 한국어 외의 다양한 언어로도 볼 수 있습니다.
 
 - [Brazilian Portuguese - Português Brasileiro](https://tour.dlang.org/tour/pt/welcome/welcome-to-d) (번역 진행 중)
 - [German - Deutsch](https://tour.dlang.org/tour/de/welcome/welcome-to-d) (번역 진행 중)
