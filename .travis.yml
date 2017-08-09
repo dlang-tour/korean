@@ -10,7 +10,11 @@ addons:
     packages:
     - libevent-dev
 script:
-  - git clone https://github.com/stonemaster/dlang-tour ../tour
+  - echo "Check for trailing whitespace"
+  - grep -nr --include \*.md '\s$' . ; test $? -eq 1
+  - echo "Check for tabs"
+  - grep -nrP --include \*.md '\t' . ; test $? -eq 1
+  - git clone https://github.com/dlang-tour/core ../tour
   - mkdir -p ../tour/public/content/lang
   - mv * ../tour/public/content/lang
   - wget https://raw.githubusercontent.com/dlang/tools/master/rdmd.d
