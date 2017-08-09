@@ -1,75 +1,76 @@
-# Arrays
+# 배열(Arrays)
 
-There are two types of Arrays in D: **static** and **dynamic**.
-Access to arrays of any kind is bounds-checked (except when the compiler can prove
-that bounds checks aren't necessary).
-A failed bounds check yields a `RangeError` which aborts the application.
-The brave can disable this safety feature with the
-compiler flag `-boundschecks=off`
-in order to gain speed improvements at the cost of safety.
+D 언어에는 **정적 배열**, **동적 배열** 두 종류가 있습니다. 둘의 사이에는 배열 생성에 필요한 공간을 프로그램 실행 전에 받는지, 실행 중에 받는지의 차이가 있습니다.
 
-#### Static arrays
+배열 내 원소를 접근할 때 D 언어는 배열 크기를 초과한 부분에 접근하려는지 컴파일 시점에 점검하지만, 컴파일러가 판단했을 때 불필요하다고 판단한다면 점검하지 않는 경우가 있습니다.
 
-Static arrays are stored on the stack if defined inside a function,
-or in static memory otherwise. They have a fixed,
-compile-time known length. A static array's type includes
-the fixed size:
+배열 크기를 초과한 부분에 접근하려고 할 때 `RangeError` 가 발생하고, 더이상의 문제를 발생시키지 않기 위해 실행 중인 프로그램은 중단됩니다. 성능을 위해 이러한 안전장치를 포기할 수 있을 만한 능력이 된다면, `-boundschecks=off` 옵션을 컴파일러에게 전달해 안전장치를 끌 수 있습니다.
 
+#### 정적 배열(Static arrays)
+
+정적 배열은 함수 내에서 선언시 스택(stack) 공간에 할당되고, 그 외에는 별도의 고정된 메모리 공간에 할당됩니다. 
+
+이렇게 할당된 배열은 크기가 고정되어있으며, 컴파일 시점에 이 배열의 크기가 알려져 있게 됩니다.
+
+크기를 정해둔 배열을 하나의 타입으로써 사용하려면 아래의 방법을 이용합니다.
+
+```d
     int[8] arr;
+```
 
-`arr`'s type is `int[8]`. Note that the size of the array is denoted
-next to the type, and not after the variable name like in C/C++.
+`arr`은 변수의 이름이고, 이것의 타입은 `int[8]`입니다. 즉, int 타입의 값 8개를 저장할 수 있는 변수가 되었습니다.
 
-#### Dynamic arrays
+이때 주의할 점은, C/C++과는 달리 배열의 크기를 타입명 바로 옆에 명시해야한다는 것입니다. 아래의 코드를 참고해주십시오.
 
-Dynamic arrays are stored on the heap and can be expanded
-or shrunk at runtime. A dynamic array is created using a `new` expression
-and its length:
+```c
+    // 이것은 C/C++ 스타일입니다.
+    int arr[8];
 
+    // 이것은 D 언어의 스타일입니다.
+    int[8] arr;
+```
+
+#### 동적 배열(Dynamic arrays)
+
+동적 배열은 메모리 공간 중 힙(heap) 영역에 할당되어, 프로그램 실행 중에도 크기 조절을 자유롭게 할 수 있습니다.
+
+동적 배열은 `new`라는 표현과 함께 원하는 크기를 지정하여 만듭니다.
+
+```d
     int size = 8; // run-time variable
     int[] arr = new int[size];
+```
 
-The type of `arr` is `int[]`, which is a **slice**. Slices
-will be explained in more detail in the [next section](basics/slices). Multi-dimensional
-arrays can be created easily using the `auto arr = new int[3][3]` syntax.
+`arr`은 변수의 이름이고, 이것의 타입은 `int[]`인데 이것은 **슬라이스(slice)** 형태로 이용할 수 있는 타입입니다. 슬라이스에 대해서는 [슬라이스](basics/slices) 섹션에서 다루겠습니다.
 
-#### Array operations and properties
+행렬 등을 다룰 때 필요한 다차원 배열(Multi-dimensional arrays)은  `auto arr = new int[3][3]`와 같은 문법을 사용해 간단히 만들 수 있습니다. `auto` 키워드에 대해서는 이후 다뤄질 섹션을 참고해주십시오.
 
-Arrays can be concatenated using the `~` operator, which
-will create a new dynamic array.
+#### 배열 연산과 배열이 가진 프로퍼티(Array operations and properties)
 
-Mathematical operations can
-be applied to whole arrays using a syntax like `c[] = a[] + b[]`, for example.
-This adds all elements of `a` and `b` so that
-`c[0] = a[0] + b[0]`, `c[1] = a[1] + b[1]`, etc. It is also possible
-to perform operations on a whole array with a single
-value:
+배열과 배열은 `~` 연산자를 사용해 하나의 배열로 합쳐질 수 있습니다. 이때 합쳐진 배열은 동적 배열로 만들어집니다.
 
-    a[] *= 2; // multiple all elements by 2
-    a[] %= 26; // calculate the modulo by 26 for all a's
+수학에서 행렬 연산을 배울 때, 차원이 같은 행렬끼리의 덧셈에 대해 들어보신 적이 있을 겁니다. 이 수학적 연산은 `c[] = a[] + b[]` 문법을 통해 간단히 이루어질 수 있습니다. 이 연산의 결과물은 각 행렬에 위치한 숫자를 더한 것입니다. 풀어쓴다면, 반복문 등을 통해 `c[0] = a[0] + b[0]`, `c[1] = a[1] + b[1]` ... 를 쭉 수행하여 행렬의 원소끼리 더하는 과정이 됩니다.
 
-These operations might be optimized
-by the compiler to use special processor instructions that
-do the operations in one go.
+D 언어의 배열은 마치 행렬과 비슷한 성질을 보입니다. 특히, 수학에서 이용되는 행렬의 스칼라 연산 또한 간단히 지원됩니다. 즉, 행렬의 모든 원소에 대해 일정한 수를 곱해주거나, 나눠주거나, 나머지를 구하는 모듈로(modulo) 연산을 간단히 수행할 수 있다는 것입니다. 아래 코드를 참고해주십시오.
 
-Both static and dynamic arrays provide the property `.length`,
-which is read-only for static arrays, but can be used in the case of
-dynamic arrays to change its size dynamically. The
-property `.dup` creates a copy of the array.
+```d
+    a[] *= 2; // 배열의 모든 숫자에 2가 곱해진 상태로 만듭니다.
+    a[] %= 26; // 배열의 모든 숫자에 대해, 26으로 나눈 나머지 값이 저장되도록 만듭니다.
+```
 
-When indexing an array through the `arr[idx]` syntax, a special
-`$` symbol denotes an array's length. For example, `arr[$ - 1]` references
-the last element and is a short form for `arr[arr.length - 1]`.
+이러한 연산 과정은 특별한 CPU 명령을 통해 최대한 빠르게 동작할 수 있도록, 컴파일할 때 최적화될 것입니다.
 
-### Exercise
+정적 배열과 동적 배열 모두 `.length` 라는 프로퍼티를 통해 배열의 크기가 얼마인지 알 수 있습니다. 이 프로퍼티는 사용자 임의로 값을 변경할 수 없는 읽기 전용 상태입니다. `.dup`이라는 프로퍼티는 배열의 복사본을 만들어 줍니다.
 
-Complete the function `encrypt` to decrypt the secret message.
-The text should be encrypted using *Caesar encryption*,
-which shifts the characters in the alphabet using a certain index.
-The to-be-encrypted text only contains characters in the range `a-z`,
-which should make things easier.
+배열의 각 부분은 `arr[idx]` 문법을 사용해 값을 읽어올 수 있습니다. `$` 라는 특별한 문자를 통해 `arr.length` 와 동일하게, 전체 배열 크기를 가져올 수 있습니다. 예를 들어, 배열의 가장 마지막 값을 읽어올 때는 `arr[arr.length - 1]` 와 같이 작성할 수도 있지만, `$` 를 활용해 `arr[$ - 1]` 처럼 간단히 작성할 수도 있습니다.
 
-### In-depth
+### 실습 코너
+
+아래에 주어진 `encrypt` 함수를 완성하여 암호문이 어떻게 나올지 확인해보십시오.
+
+사용될 암호화 기법은 *카이사르 암호(혹은 시저 암호)* 입니다. 이 기법은, 원래 알파벳 순서를 정해진 간격만큼 밀려 써(a -> c, b -> d, ... z -> b) 원문이 무엇인지 아리송하게 만드는 기법입니다. 실습 중 편의를 위해 입력에는 알파벳 소문자(`a-z`)만 포함되어있습니다.
+
+### 더 살펴보기
 
 - [Arrays in _Programming in D_](http://ddili.org/ders/d.en/arrays.html)
 - [Array specification](https://dlang.org/spec/arrays.html)
@@ -80,40 +81,39 @@ which should make things easier.
 import std.stdio : writeln;
 
 /**
-Shifts every character in the
-array `input` for `shift` characters.
-The character range is limited to `a-z`
-and the next character after z is a.
+밀려 쓴 알파벳들을 얻기 위해 밀려쓰기(Shift)를 구현해보십시오.
+입력으로 들어올 글자들은 모두 소문자 알파벳으로 제한되어있습니다.
+z 다음에 어떤 문자가 오는지 궁금하다면, 그것은 a입니다.
+(머리 속에 원반을 떠올리고, A부터 Z까지 쭉 돌려가며 적어보십시오.)
 
-Params:
-    input = array to shift
-    shift = shift length for each char
-Returns:
-    Shifted char array
+입력:
+    input = 밀려 쓸 문자열 배열
+    shift = 알파벳 몇 글자씩 뛰어넘을지 결정할 간격(예: shift = 2라면, a는 c가 되고 b는 d가 됩니다.)
+실행 후 결과:
+    카이사르 암호화로 밀려써진 암호문
 */
 char[] encrypt(char[] input, char shift)
 {
     auto result = input.dup;
-    // TODO: shift each character
+    // TODO: 여기서 밀려쓰기를 구현하면 됩니다.
     return result;
 }
 
 void main()
 {
-    // We will now encrypt the message with
-    // Caesar encryption and a
-    // shift factor of 16!
+    // 카이사르 암호를 실습해봅시다.
+    // 간격을 16으로 지정했기 때문에, w는 m으로 바뀌고 e는 u로 바뀔 것입니다.
     char[] toBeEncrypted = [ 'w','e','l','c',
       'o','m','e','t','o','d',
-      // The last , is okay and will just
-      // be ignored!
+      // 참고로 'd' 다음에 오는 쉼표(,)는 생략할 수 있습니다. 마지막 값이기 때문입니다.
+      // 쉼표를 적어도 컴파일 오류가 발생하지 않습니다.
     ];
-    writeln("Before: ", toBeEncrypted);
+    writeln("평문: ", toBeEncrypted);
     auto encrypted = encrypt(toBeEncrypted, 16);
-    writeln("After: ", encrypted);
+    writeln("암호문: ", encrypted);
 
-    // Make sure we the algorithm works
-    // as expected
+    // 여러분이 작성한 encrypt 함수가 올바르게 동작하는지 검증합니다.
+    // mubsecujet가 나오지 않았다면 encrypt 함수를 다시 살펴보시기 바랍니다.
     assert(encrypted == [ 'm','u','b','s','e',
             'c','u','j','e','t' ]);
 }
