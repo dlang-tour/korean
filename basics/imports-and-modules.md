@@ -1,24 +1,20 @@
-# Imports and modules
+# import 구문과 모듈(Imports and modules)
 
-For a simple hello world program in D, `import`s are needed.
-The `import` statement makes all public functions
-and types from the given **module** available.
+D 언어의 Hello World 예제를 보셨겠지만, 아주 간단한 예제에서도 `import` 문이 필요했습니다.
 
-The standard library, called [Phobos](https://dlang.org/phobos/),
-is located under the **package** `std`
-and its modules are referenced through `import std.MODULE`.
+`import` 구문은 가져오려는 모듈 내에 존재하는 모든 공개적으로 접근 가능한(public) 함수와 타입/타입 별칭을 현재 파일에서 쓸 수 있게 가져오는데 쓰입니다.
 
-The `import` statement can also be used to selectively
-import certain symbols of a module:
+[Phobos](https://dlang.org/phobos/) 라고 불리는 D 언어 표준 라이브러리는 `std` 라는 **패키지** 안에 들어있고, 패키지 내의 모듈들은 `import std.모듈명` 과 같은 형식으로 가져올 수 있습니다.
 
+모듈 내의 일부 요소만 필요하다면, 선택적으로 가져오는 것도 가능합니다. 아래는 예제 코드입니다.
+
+```d
     import std.stdio : writeln, writefln;
+```
 
-Selective imports can be used to improve readability by making
-it obvious where a symbol comes from, and also as a way to
-prevent clashing of symbols with the same name from different modules.
+이런 방식으로 필요한 요소만을 가져오게 되면, 어떤 함수나 타입이 어느 패키지와 모듈에서 온 건지 쉽게 알 수 있으며 다른 패키지와 이름이 겹치는 불상사를 피할 수도 있습니다.
 
-An `import` statement does not need to appear at the top of a source file.
-It can also be used locally within functions or any other scope.
+`import` 구문은 반드시 소스 코드 최외곽의 상단에 위치하지 않아도 됩니다. 외부 모듈의 요소가 필요한 함수의 내부나 다른 스코프(scope) 내에서 작성하면 됩니다.
 
 ## {SourceCode}
 
@@ -26,7 +22,7 @@ It can also be used locally within functions or any other scope.
 void main()
 {
     import std.stdio;
-    // or import std.stdio : writeln;
-    writeln("Hello World!");
+    // 또는 import std.stdio : writeln; 와 같이 import할 요소를 지정할 수 있습니다.
+    writeln("안녕 세상아!");
 }
 ```
