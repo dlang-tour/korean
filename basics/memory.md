@@ -1,40 +1,40 @@
-# Memory
+# 메모리(Memory)
 
-D is a system programming language and thus allows manual
-memory management. However, manual memory management is very error-prone
-and thus D uses a *garbage collector* by default to manage memory allocation.
+D 언어는 시스템 소프트웨어를 만드는데 쓰일 수 있는 프로그래밍 언어로써, 프로그램의 메모리를 프로그래머가 직접 관리할 수 있는 방법을 제공합니다.
 
-D provides pointer types `T*` like in C:
+그러나 직접 관리하게 될 경우 할당 후 미해제, 해제된 메모리 사용 등의 문제가 발생하기 쉽습니다. 따라서 프로그래머가 명시적으로 선언하지 않는 한 기본적으로는 *가비지 컬렉터(Garbage collector)* 의 도움을 받습니다.
 
+D 언어는 C 언어처럼 포인터 타입 `T*` 를 지원합니다.
+
+```d
     int a;
-    int* b = &a; // b contains address of a
-    auto c = &a; // c is int* and contains address of a
+    int* b = &a; // b에는 a의 메모리 주소가 저장됩니다.
+    auto c = &a; // c에는 등호(=) 우측을 봤을 int 타입의 변수 a에 대한 주소가 있으므로 auto는 int*로 유추됩니다.
+```
 
-A new memory block on the heap is allocated using the
-`new` expression, which returns a pointer to the managed
-memory:
+힙(heap) 메모리 구역에 메모리를 할당 받는 것은 `new` 라는 구문을 통해 가능합니다. `new` 로 할당받은 메모리는 D 언어의 가비지 컬렉터가 관리할 수 있는 메모리 공간입니다.
 
+```d
     int* a = new int;
+```
 
-As soon as the memory referenced by `a` isn't referenced anymore
-through any variable in the program, the garbage collector
-will free its memory.
+가비지 컬렉터가 관리하는 메모리는, 프로그램 전체적으로 전혀 사용되지 않을 때 자동으로 해제됩니다.
 
-D has three different security levels for functions: `@system`, `@trusted`, and `@safe`.
-Unless specified otherwise, the default is `@system`.
-`@safe` is a subset of D that prevents memory bugs by design.
-`@safe` code can only call other `@safe` or `@trusted` functions.
-Moreover, explicit pointer arithmetic is forbidden in `@safe` code:
+함수의 메모리 보호 모드는 `@system`, `@trusted`, and `@safe` 세가지 어노테이션(Annotation)으로 조절할 수 있습니다. 특별히 명시하지 않으면 기본은 `@system` 으로 지정됩니다.
 
+`@safe` 는 일부 기능이 제한된 D 언어 모드를 제공하는데, 언어 설계부터 메모리 관련 버그를 예방할 수 있도록 설계되어있는 모드입니다. `@safe` 로 표시된 함수는 다른 함수를 호출할 때에 자신과 같은 수준인 `@safe` 또는 프로그래머가 지정한 수준인 `@trusted` 만 호출할 수 있습니다. 게다가, 이 모드에서는 메모리 포인터 연산을 금지하고 있습니다.
+
+```d
     void main() @safe {
         int a = 5;
         int* p = &a;
-        int* c = p + 5; // error
+        int* c = p + 5; // @safe 에서는 포인터 연산이 금지되어있습니다. 오류가 발생합니다.
     }
+```
 
-`@trusted` functions are manually verified functions that allow a bridge between SafeD and the underlying dirty low-level world.
+`@trusted` 는 직접 메모리 접근 등의 위험한 기능을 하는 저수준(low-level) 함수와 SafeD 코드 간을 이어주는 중계 함수가 있을 때, `@safe` 에서 호출할 수 있다고 표시할 때 사용됩니다. `@trusted` 는 프로그래머가 직접 코드를 검토하고 안전하다고 결론을 내려졌을 때 해당 함수에 표기하면 됩니다.
 
-### In-depth
+### 더 살펴보기
 
 * [SafeD](https://dlang.org/safed.html)
 
@@ -46,13 +46,17 @@ import std.stdio : writeln;
 void safeFun() @safe
 {
     writeln("Hello World");
-    // allocating memory with the GC is safe too
+    // 가비지 컬렉터를 통해 받은 메모리는 더이상 사용되지 않을 때 자동으로 해제 됩니다.
+    // 따라서 안전합니다.
     int* p = new int;
 }
 
 void unsafeFun()
 {
     int* p = new int;
+    // 힙(heap) 공간에 할당 받은 p의 메모리 주소를 5만큼 증가시켜
+    // fiddling에라는 포인터 변수에 주소를 저장했습니다.
+    // 포인터 주소를 직접 조작했으므로 이 코드는 안전하지 않습니다.
     int* fiddling = p + 5;
 }
 
