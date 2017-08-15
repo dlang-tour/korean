@@ -1,53 +1,50 @@
-# Slices
+# 슬라이스(Slices)
 
-Slices are objects from type `T[]` for any given type `T`.
-Slices provide a view on a subset of an array
-of `T` values - or just point to the whole array.
-**Slices and dynamic arrays are the same.**
+슬라이스는 여러가지를 의미할 수 있습니다. 먼저 T라는 타입의 값들을 담은 `T[]` 배열로부터 얻어질 수 있는 메모리상의 특성이 있습니다. 두번째는 `[]` 연산자를 적용할 수 있는 배열 타입 그 자체를 가르킵니다.
 
-A slice consists of two members - a pointer to the starting element and the
-length of the slice:
+슬라이스는 `T[]` 전체가 될 수도 있고, 그 중의 일부분을 추려낸 일부분일 수 있습니다. 당연히 추려낸 배열의 타입은 `T[]` 가 됩니다.
 
-    T* ptr;
-    size_t length; // unsigned 32 bit on 32bit, unsigned 64 bit on 64bit
+**슬라이스와 동적 배열(dynamic arrays)를 같이 놓고 설명하는 부분이 많기 때문에** 함께 생각하며 이해하면 좋을 것 같습니다. 서로 떼어놓을 수 없는 관계이기도 하고, 실제로 이 섹션에서 두 용어를 혼용하는 경우가 있습니다.
 
-### Getting a slice via new allocation
+슬라이스는 먼저 크게 두가지 요소를 갖는 특성이 있습니다. 값들이 연속적으로 나열되어있을 때, 첫 값을 가르키는 포인터(pointer)가 필요하고, 연속적으로 나열된 값들이 몇개나 있는지 알려줄 길이(length)가 필요합니다.
 
-If a new dynamic array is created, a slice to this freshly
-allocated memory is returned:
 
+```d
+    T* ptr; // T라는 타입의 값이 있는 시작 위치(메모리 주소)를 가르키는 포인터 ptr 입니다.
+    size_t length; // 32비트 환경에서는 부호 없는 32비트 정수로, 64비트에서는 부호 없는 64비트 정수를 사용합니다.
+```
+
+### 새 메모리 공간을 받아 슬라이스 얻기(Getting a slice via new allocation)
+
+동적 배열을 생성했다면, 이 배열을 얻음으로써 슬라이스로의 특성을 함께 획득하게 됩니다.
+
+```d
     auto arr = new int[5];
-    assert(arr.length == 5); // memory referenced in arr.ptr
+    assert(arr.length == 5); // 실행시 arr.ptr 이라는 프로퍼티를 통해 포인터를 참조합니다
+```
 
-Actual allocated memory in this case is completely managed by the garbage
-collector. The returned slice acts as a "view" on underlying elements.
+이렇게 할당 받은 동적 배열은 가비지 컬렉터(garbage collector)에 의해 자동으로 관리됩니다. 메모리상에는 포인터와 D 언어에서 관리하는 내부 배열 형태로 관리되고 있지만, 슬라이스를 통해 실제 구현을 신경쓰지 않고 간편하게 값을 다루게 됩니다.
 
-### Getting a slice to existing memory
+### 이미 사용 중인 메모리에 대한 슬라이스(Getting a slice to existing memory)
 
-Using a slicing operator one can also get a slice pointing to some already
-existing memory. The slicing operator can be applied to another slice, static
-arrays, structs/classes implementing `opSlice` and a few other entities.
+슬라이스 연산자 `[]` 를 이미 사용 중인 메모리 공간에 적용하여 또다른 슬라이스를 얻을 수도 있습니다. 슬라이스 연산자 `[]` 는 스택(stack)에 할당된 정적 배열(static array)에도, `opSlice` 라는 공개된(public) 내부 함수를 구현한 `struct` 나 `class` 변수에도 사용할 수 있습니다. (Java 등의 언어에서 넘어오신 경우, opSlice를 연산자 오버로드나 인터페이스 형태로 이해하셔도 괜찮습니다.)
 
-In an example expression `origin[start .. end]` the slicing operator is used to get
-a slice of all elements of `origin` from `start` to the element _before_ `end`:
+아래 예시에서서 다루는 `origin[시작 .. 끝]` 은 시작 인덱스를 포함하지만 끝 인덱스를 포함하지 않는 연속된 배열값을 슬라이스로 얻어올 때 쓰입니다.
 
-    auto newArr = arr[1 .. 4]; // index 4 is NOT included
-    assert(newArr.length == 3);
-    newArr[0] = 10; // changes newArr[0] aka arr[1]
+```d
+    auto arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; 
+    auto newArr = arr[1 .. 4]; // 끝부분(끝 인덱스)의 원소는 포함되지 않습니다. (시작 <= x < 끝)
+    assert(newArr.length == 3); // 현재 newArr은 [1, 2, 3] 이라는 슬라이스를 얻은 상태입니다.
+    newArr[0] = 10; // newArr[0]에 10을 저장했는데 newArr[0]의 원본인 arr[1]까지 값이 10으로 바뀝니다.
+```
 
-Such slices generate a new view on existing memory. They *don't* create
-a new copy. If no slice holds a reference to that memory anymore - or a *sliced*
-part of it - it will be freed by the garbage collector.
+기존에 할당된 메모리 공간으로 부터 만들어진 슬라이스는, 기존 *값들을 복사하여 만든 새로운 배열*이 아닙니다. 주의하셔야합니다. 슬라이스의 값을 바꾸게 되면 원본이 함께 바뀌는 메모리 참조(memory reference) 형태로 동작합니다. 슬라이스끼리 참조가 더이상 발생하지 않으면 역시 가비지 컬렉터(garbage collector)가 메모리 확보를 위해  정리합니다.
 
-Using slices, it's possible to write very efficient code for things (like parsers, for example)
-that only operate on one memory block, and slice only the parts they really need
-to work on. In this way, there's no need to allocate new memory blocks.
+슬라이스의 이런 특성들을 활용하면 파서(parser) 등을 효율적으로 작성할 수 있습니다. 메모리 공간은 원본 데이터를 저장하기 위한 한 곳만 있으면 되고, 슬라이스를 통해 필요한 부분만을 다루면 되기 때문입니다. 슬라이스를 활용할 수 있는 경우, 새로운 메모리 공간을 할당 받을 필요가 줄어듭니다.
 
-As seen in the [previous section](basics/arrays), the `[$]` expression is a shorthand form for
-`arr.length`. Hence `arr[$]` indexes the element one past the slice's end, and
-thus would generate a `RangeError` (if bounds-checking hasn't been disabled).
+[배열](basics/arrays) 섹션에서 본 `$` 라는 단축 문법이 생각날지 모르겠습니다. `arr.length` 와 같은 역할을 해주는 단축 문법으로 슬라이스에서도 적용할 수 있습니다. 슬라이스에서도 일반적인 상태에선 `arr[$]` 는 숫자로 가르킬 수 있는 최대 범위인 `arr.length - 1` 을 초과하기 때문에 `RangeError` 가 발생합니다. 단, 경계 검사(bounds-checking) 기능을 해제한 상태로 컴파일하면 오류가 발생하지 않습니다.
 
-### In-depth
+### 더 살펴보기
 
 - [Introduction to Slices in D](http://dlang.org/d-array-article.html)
 - [Slices in _Programming in D_](http://ddili.org/ders/d.en/slices.html)
@@ -60,21 +57,26 @@ import std.stdio : writeln;
 void main()
 {
     int[] test = [ 3, 9, 11, 7, 2, 76, 90, 6 ];
-    test.writeln;
-    writeln("First element: ", test[0]);
-    writeln("Last element: ", test[$ - 1]);
-    writeln("Exclude the first two elements: ",
-        test[2 .. $]);
 
-    writeln("Slices are views on the memory:");
+    // 아래 코드는 test 내용물을 정상적으로 출력합니다.
+    // 함수 호출시 전달해야할 값이 0개라면, 소괄호 `()` 를 생략해도
+    // 함수를 호출할 수 있습니다. 마치 프로퍼티(property)처럼 보입니다.
+    test.writeln;
+
+    writeln("첫번째 값 : ", test[0]);
+    writeln("마지막 값 : ", test[$ - 1]);
+    writeln("앞의 두 개 빼고 나머지 전체: ",
+        test[2 .. $]); // [START .. END] 범위에서 END는 포함되지 않으니 `$` 를 마음놓고 쓸 수 있습니다.
+
+    writeln("슬라이스는 메모리 상의 연속적으로 놓인 값들을 편하게 다루는 도구입니다");
     auto test2 = test;
     auto subView = test[3 .. $];
-    test[] += 1; // increment each element by 1
+    test[] += 1; // 슬라이스내 값들을 1씩 증가시킵니다. 잘 기억나지 않는다면 arrays 섹션을 복습하십시오.
     test.writeln;
     test2.writeln;
     subView.writeln;
 
-    // Create an empty slice
+    // 빈 슬라이스를 만듭니다.
     assert(test[2 .. 2].length == 0);
 }
 ```
