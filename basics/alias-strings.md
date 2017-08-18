@@ -81,8 +81,8 @@ D 언어에는 다른 방법도 더 있으니 바쁘시더라도 [문자열을 �
 - [Unicode gem](gems/unicode)
 - [Characters in _Programming in D_](http://ddili.org/ders/d.en/characters.html)
 - [Strings in _Programming in D_](http://ddili.org/ders/d.en/strings.html)
-- [std.utf](http://dlang.org/phobos/std_utf.html) - UTF en-/decoding algorithms
-- [std.uni](http://dlang.org/phobos/std_uni.html) - Unicode algorithms
+- [std.utf](http://dlang.org/phobos/std_utf.html) - UTF 인코딩 종류에 대한 인코드/디코드 알고리즘 구현을 제공합니다.
+- [std.uni](http://dlang.org/phobos/std_uni.html) - 유니코드 처리 알고리즘 구현을 제공합니다.
 - [String Literals in the D spec](http://dlang.org/spec/lex.html#string_literals)
 
 ## {SourceCode}
