@@ -20,7 +20,7 @@
 
     if (a == 5)
         a = a + 1;
-    
+
     if (a == 6) {
         writeln("6 발견!");
         writeln("드디어 발견!");
@@ -63,12 +63,16 @@ void main()
     int c = 5;
     switch(c) {
         case 0: .. case 9:
-            writeln(c, " 는 0 또는 9 혹은 그 사이의 숫자입니다.");
-            break; // break를 써두지 않으면 폭포수가 떨어지듯 아래로 이동해 다음 `case` 의 코드를 실행하게 됩니다.
+            writeln(c, " 는 0 또는 9 혹은 그 사이입니다.");
+            break;
+            // 위의 break를 써두지 않으면 폭포수가 떨어지듯
+            // 아래로 이동해 다음 `case` 의 코드를 실행하게 됩니다.
         case 10:
             writeln("10! 영어로 Ten이죠!");
             break;
-        default: // 위의 `case` 에 일치되는 숫자가 없는 경우 여기에 도달하게 됩니다.
+        default:
+            // 위의 `case` 에 일치되는 숫자가 없는 경우
+            // 여기에 도달하게 됩니다.
             writeln("별 거 아니네");
             break;
     }

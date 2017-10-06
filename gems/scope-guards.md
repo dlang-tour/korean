@@ -32,7 +32,9 @@ void main()
         writeln("\t<head>");
         scope(exit) writeln("\t</head>");
         "\t<title>%s</title>".writefln("Hello");
-    } // 이 스코프를 나갈 때, 두 줄 위에 선언해둔 scope(exit) 부분이 호출됩니다.
+    }
+    // 위에 있는 스코프를 나갈 때,
+    // 블럭 내 밑에서 두번째의 scope(exit) 부분이 호출됩니다.
 
     writeln("\t<body>");
 
@@ -43,9 +45,12 @@ void main()
     writeln("\t\t<h1>Hello World!</h1>");
 
     // 스코프 가드 문법 덕분에, 메모리 등의 자원 정리 코드를
-    // 반드시 마지막에 작성할 필요 없이, 선언/할당부의 바로 밑에 작성할 수 있습니다.
-    // 아래 코드에서는 malloc() 으로 받은 메모리가 스코프 종료시 해제될 수 있도록
-    // 곧바로 아래에 스코프 가드로 해제 코드를 작성하였습니다.
+    // 반드시 마지막에 작성할 필요 없이, 선언/할당부
+    // 바로 밑에 작성할 수 있습니다.
+    // 아래 코드에서는 malloc() 으로 받은 메모리가
+    // 스코프 종료시 해제될 수 있도록
+    // 곧바로 아래에 스코프 가드로
+    // 해제 코드를 작성하였습니다.
     import core.stdc.stdlib : free, malloc;
     int* p = cast(int*) malloc(int.sizeof);
     scope(exit) free(p);

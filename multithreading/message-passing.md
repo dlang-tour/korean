@@ -132,8 +132,8 @@ void main()
         send(tid, CancelMessage());
     }
 
-    // 모든 쓰레드로부터 CancelAckMessage를 받을 때까지 메인 쓰레드에서
-    // 기다립니다
+    // 모든 쓰레드로부터 CancelAckMessage를 받을 때까지
+    // 메인 쓰레드에서 기다립니다
     foreach(ref tid; threads) {
         receiveOnly!CancelAckMessage;
         writeln("Received CancelAckMessage!");

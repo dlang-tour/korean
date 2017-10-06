@@ -78,7 +78,8 @@ synchronized class SafeQueue(T)
 /*
 여러 쓰레드에서 동시에 출력문을 호출해도 안전하게 출력되도록 만든
 출력 함수입니다. 여기서 args는 가변 길이 입력값으로 제공되어있습니다.
-전혀 입력값을 주지 않을 수도 있고, 원하는 만큼 다수의 입력값을 넣는 것도 가능합니다.
+전혀 입력값을 주지 않을 수도 있고,
+원하는 만큼 다수의 입력값을 넣는 것도 가능합니다.
 */
 void safePrint(T...)(T args)
 {
@@ -111,7 +112,8 @@ void threadConsumer(Tid owner,
         if (i == int.init)
             continue;
         ++popped;
-        // atomicLoad를 사용해 shared로 선언된 queueCounter의 값을
+        // atomicLoad를 사용해
+        // shared로 선언된 queueCounter의 값을
         // 안전하게 읽어옵니다
         safePrint("추출됨 ", i,
             " (Consumer pushed ",

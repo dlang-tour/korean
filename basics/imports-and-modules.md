@@ -22,7 +22,8 @@ D 언어의 Hello World 예제를 보셨겠지만, 아주 간단한 예제에서
 void main()
 {
     import std.stdio;
-    // 또는 import std.stdio : writeln; 와 같이 import할 요소를 지정할 수 있습니다.
+    // 또는 import std.stdio : writeln; 와 같이
+    // import할 요소를 지정할 수 있습니다.
     writeln("안녕 세상아!");
 }
 ```

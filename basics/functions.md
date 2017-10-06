@@ -2,7 +2,7 @@
 
 함수에 대해 다루기에 앞서, 이미 이전 강좌에서 한 함수를 보았습니다. 바로 모든 D 언어 프로그램의 실행 시작점인 `main()` 입니다.
 
-함수는, 몇가지 값을 매개변수(argument)로 입력 받고 함수 내에서 일련의 작업을 수행한 다음 결과값을 반환합니다. `void` 를 결과값의 타입으로 지정한 경우, 아무것도 반환하지 않습니다. 
+함수는, 몇가지 값을 매개변수(argument)로 입력 받고 함수 내에서 일련의 작업을 수행한 다음 결과값을 반환합니다. `void` 를 결과값의 타입으로 지정한 경우, 아무것도 반환하지 않습니다.
 
 ```d
     int add(int lhs, int rhs) {
@@ -105,7 +105,9 @@ void randomCalculator()
     int a = 10;
     int b = 5;
 
-    // uniform(START, END) 함수는 START <= x < END 를 만족하는 정수 x 를 랜덤하게 생성합니다.
+    // uniform(START, END) 함수는
+    // START <= x < END 를 만족하는 정수 x 를
+    // 랜덤하게 생성합니다.
     // uniform이 반환하는 값에 따라 랜덤한 동작을 보여줍니다.
     switch (uniform(0, 4)) {
         case 0:
@@ -122,7 +124,7 @@ void randomCalculator()
             break;
         default:
             // '도달할 수 없는 코드 위치'를 표시하는 약속입니다.
-            // 기본 타입(Basic types) 강좌에서 살짝 언급되었습니다.
+            // 기본 타입(Basic types) 강좌에서 언급되었습니다.
             assert(0);
     }
 }
@@ -130,7 +132,8 @@ void randomCalculator()
 void main()
 {
     randomCalculator();
-    // add(), sub(), mul() and div() 는 randomCalculator 밖에서는 알 수 없습니다.
+    // add(), sub(), mul() and div() 는
+    // randomCalculator 밖에서는 알 수 없습니다.
     // 이를 assert 구문으로 검증합니다.
     static assert(!__traits(compiles,
                             add(1, 2)));

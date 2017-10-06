@@ -63,19 +63,24 @@ void main()
         writefln("key: %s, value: %d",
                        key, value);
 
-    // `.keys` 와 .values` 는 각각 키들의 배열, 값들의 배열을 반환합니다
+    // `.keys` 와 .values` 는
+    // 각각 키들의 배열, 값들의 배열을 반환합니다
     writeln("Words:", words.keys);
 
-    // `.byKey`, `.byValue` 그리고 `.byKeyValue` 는 `.keys` 나 `.values` 와는 다르게
-    // 최종적으로 세 함수에서 반환되는 값이 필요해질 때만 동작하는 지연 평가(lazy evaluation) 기법을
+    // `.byKey`, `.byValue` 그리고 `.byKeyValue` 는
+    // `.keys` 나 `.values` 와는 다르게
+    // 최종적으로 세 함수에서 반환되는 값이
+    // 필요해질 때만 동작하는 지연 평가(lazy evaluation) 기법을
     // 사용하고 있습니다. 호출의 결과물은 지연 평가로 만들어지는 배열입니다.
     writeln("# Words: ", words.byValue.sum);
 
-    // `assocArray` 에 키와 값이 담긴 튜플(tuple)을 전달해주면 연관 배열을 만들 수 있습니다.
+    // `assocArray` 에 키와 값이 담긴 튜플(tuple)을
+    // 전달해주면 연관 배열을 만들 수 있습니다.
     auto array = ['a', 'a', 'a', 'b', 'b',
                   'c', 'd', 'e', 'e'];
 
-    // `.group` 은 배열에 담긴 값들이 몇번 반복되는지 자동으로 계산하여 튜플(tuple)을 만듭니다.
+    // `.group` 은 배열에 담긴 값들이 몇번 반복되는지
+    // 자동으로 계산하여 튜플(tuple)을 만듭니다.
     // 이 튜플로부터 연관 배열을 만들 수 있습니다.
     auto keyValue = array.group;
     writeln("Key/Value range: ", keyValue);

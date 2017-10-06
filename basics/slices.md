@@ -32,7 +32,7 @@
 아래 예시에서서 다루는 `origin[시작 .. 끝]` 은 시작 인덱스를 포함하지만 끝 인덱스를 포함하지 않는 연속된 배열값을 슬라이스로 얻어올 때 쓰입니다.
 
 ```d
-    auto arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; 
+    auto arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     auto newArr = arr[1 .. 4]; // 끝부분(끝 인덱스)의 원소는 포함되지 않습니다. (시작 <= x < 끝)
     assert(newArr.length == 3); // 현재 newArr은 [1, 2, 3] 이라는 슬라이스를 얻은 상태입니다.
     newArr[0] = 10; // newArr[0]에 10을 저장했는데 newArr[0]의 원본인 arr[1]까지 값이 10으로 바뀝니다.
@@ -65,13 +65,18 @@ void main()
 
     writeln("첫번째 값 : ", test[0]);
     writeln("마지막 값 : ", test[$ - 1]);
-    writeln("앞의 두 개 빼고 나머지 전체: ",
-        test[2 .. $]); // [START .. END] 범위에서 END는 포함되지 않으니 `$` 를 마음놓고 쓸 수 있습니다.
 
-    writeln("슬라이스는 메모리 상의 연속적으로 놓인 값들을 편하게 다루는 도구입니다");
+    // [START .. END] 범위에서 END는 포함되지 않습니다.
+    writeln("앞의 두 개 빼고 나머지 전체: ",
+        test[2 .. $]);
+
+    writeln("슬라이스는 배열 등을 편하게 다루는 도구입니다");
     auto test2 = test;
     auto subView = test[3 .. $];
-    test[] += 1; // 슬라이스내 값들을 1씩 증가시킵니다. 잘 기억나지 않는다면 arrays 섹션을 복습하십시오.
+
+    // 슬라이스내 값들을 모두 1씩 증가시킵니다.
+    // 잘 기억나지 않는다면 arrays 섹션을 복습하십시오.
+    test[] += 1;
     test.writeln;
     test2.writeln;
     subView.writeln;

@@ -96,7 +96,8 @@ private:
     T x,y,z;
 
     /*
-    getter (값 반환 함수)와 setter (값 설정 함수)를 만들어주는 믹스인 템플릿입니다
+    getter (값 반환 함수)와 setter (값 설정 함수)를
+    만들어주는 믹스인 템플릿입니다
     같은 기능을 하는 코드를 여러번 반복하면 짜증나기 때문입니다
 
     var -> T getVAR() 와 void setVAR(T) 를 만듭니다
@@ -112,7 +113,8 @@ private:
 
     /*
     위에 만든 함수 생성을 위한 믹스인 템플릿으로
-    getX/setX, getY/setY, getZ/setZ 함수를 만들어 벡터를 다룹시다
+    getX/setX, getY/setY,
+    getZ/setZ 함수를 만들어 벡터를 다룹시다
     */
     mixin GetterSetter!"x";
     mixin GetterSetter!"y";
@@ -134,8 +136,10 @@ public:
 void main()
 {
     auto vec = Vector3!double(3,3,3);
-    // Vector3 은 템플릿 제약조건으로 인해 실수 범위 내에서 다룰 수 없다면
-    // 컴파일에 실패합니다. 아래 주석을 해제하여 테스트해보십시오.
+    // Vector3 은 템플릿 제약조건으로 인해
+    // 실수 범위 내에서 다룰 수 없는 값이라면
+    // 컴파일에 실패합니다.
+    // 아래 주석을 해제하여 테스트해보십시오.
     // Vector3!string illegal;
 
     auto vec2 = Vector3!double(4,4,4);

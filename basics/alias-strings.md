@@ -117,7 +117,8 @@ void main() {
     import std.conv : to;
     // UTF-32 인코딩으로 바꿉니다
     dstring dstr = to!dstring(str);
-    // D 언어가 유니코드를 잘 처리해준 덕분에, 인코딩을 바꿔도 같은 문자열로 잘 보일 겁니다.
+    // D 언어가 유니코드를 잘 처리해준 덕분에,
+    // 인코딩을 바꿔도 같은 문자열로 잘 보일 겁니다.
     writeln("My dstring: ", dstr);
 }
 ```

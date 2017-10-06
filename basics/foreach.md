@@ -102,7 +102,7 @@ void main() {
             total += e;
 
         auto avg = total / row.length;
-        writefln("평균값 [행 번호 %d번]: %.2f", i, avg);
+        writefln("평균값 [%d행]: %.2f", i, avg);
     }
 }
 ```

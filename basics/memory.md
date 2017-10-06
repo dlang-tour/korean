@@ -46,7 +46,8 @@ import std.stdio : writeln;
 void safeFun() @safe
 {
     writeln("Hello World");
-    // 가비지 컬렉터를 통해 받은 메모리는 더이상 사용되지 않을 때 자동으로 해제 됩니다.
+    // 가비지 컬렉터를 통해 받은 메모리는
+    // 더이상 사용되지 않을 때 자동으로 해제 됩니다.
     // 따라서 안전합니다.
     int* p = new int;
 }

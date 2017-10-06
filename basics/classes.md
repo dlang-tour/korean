@@ -89,7 +89,8 @@ class Any {
         return type;
     }
 
-    // abstract 로 선언되어있으니, 이걸 상속하여 구현해줄 클래스를 만들어야합니다
+    // abstract 로 선언되어있으니,
+    // 이걸 상속하여 구현해줄 클래스를 만들어야합니다
     abstract string convertToString();
 }
 

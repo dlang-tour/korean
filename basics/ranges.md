@@ -39,7 +39,7 @@ for (auto __rangeCopy = range;
 
  `empty` 와 `front` 는 `const` 함수로 정의되어 있기에 값 내부를 바꾸지 않는다고 약속하고 있습니다. 반드시 `const` 로 선언해야하는 것은 아닙니다.
 
-표준 라이브러리의 [`std.range`](http://dlang.org/phobos/std_range.html) 와 
+표준 라이브러리의 [`std.range`](http://dlang.org/phobos/std_range.html) 와
 [`std.algorithm`](http://dlang.org/phobos/std_algorithm.html) 에서 제공하는 함수들을 통해 `범위 탐색` 을 쉽게 이용할 수 있습니다. 또한 구현하는 입장에서, 범위 탐색  중 값 하나 하나를 제공하기 위한 복잡한 과정들을 단순한 인터페이스로 감추는 것과 동시에, 제공될 값들을 한번에 모두 생성하는 게 아니라 하나의 값이 필요할 때 한번의 연산만 수행할 수 있는 **지연(lazy) 생성** 기법을 적용하기 쉽습니다. 쉽게 설명하면, `popFront()` 가 이루어질 때마다 하나씩 만들어주면 된다는 것입니다.
 
 기본 알고리즘 외에 특별한 알고리즘들은 [D 언어 심화 강좌](gems/range-algorithms) 에서 살펴볼 수 있습니다.
@@ -65,8 +65,8 @@ struct FibonacciRange
     bool empty() const @property
     {
         // 코드를 작성해주세요
-        // 그 전에 생각해보기: 피보나치 수열이 언제 끝나야할까요?
-        // 무한정 뻗어가겠지만, D 언어의 정수 타입에는 한계가 있지 않을까요?
+        // 고려 사항1: 피보나치 수열이 언제 끝나야할까요?
+        // 고려 사항2: D 언어의 정수 타입에는 한계가 있지 않을까요?
     }
 
     void popFront()
@@ -87,11 +87,12 @@ void main()
 
     FibonacciRange fib;
 
-    // `take` 는 최대 N 개까지 값을 범위 탐색에서 추출해냅니다.
-    // 앞에서 설명했다시피 값이 필요할 때마다 `popFront` 가 호출됩니다.
+    // `take` 는 최대 N 개까지 값을 범위 탐색에서
+    // 추출해냅니다. 값이 필요할 때마다 `popFront` 가 호출됩니다.
     auto fib10 = take(fib, 10);
 
-    // 때론 범위 탐색으로 다루는 것보다 배열로 다루는 게 훨씬 편할지도 모릅니다.
+    // 때론 범위 탐색으로 다루는 것보다
+    // 배열로 다루는 게 훨씬 편할지도 모릅니다.
     // 아래와 같이 변환할 수 있습니다.
     int[] the10Fibs = array(fib10);
 

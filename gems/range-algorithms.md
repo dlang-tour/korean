@@ -91,7 +91,7 @@ to efficient, *native* machine code.};
     // 각 단어의 글자수를 세어, 길이가 짧은 것부터 모아서 정리합니다
     // 단어 길이별로 나오는 단어를 정리해 보여주는 코드입니다
     // 이 문법이 잘 이해되지 않는다면,
-    // 연쇄 함수 호출 문법(Uniform Function Call Syntax (UFCS)) 섹션을 다시 살펴보십시오
+    // UFCS 섹션을 다시 살펴보십시오
     zip(wordCharCounts, words)
       // 정렬 알고리즘을 적용하기 위해 배열로 변환합니다
       .array()
@@ -100,8 +100,10 @@ to efficient, *native* machine code.};
       // 길이별로 나오는 단어가 무엇인지만 확인하면 되기 때문입니다
       .uniq()
       // 같은 글자수를 가진 단어를 한 곳에 몰아넣습니다.
-      // chunkBy 함수는 범위 탐색 타입을 주어진 조건에 맞는 것끼리 묶어주는 역할을 합니다
-      // 이 경우에는 a[0], 즉 wordCharCounts를 기준으로 묶어주게 됩니다
+      // chunkBy 함수는 범위 탐색 타입을
+      // 주어진 조건에 맞는 것끼리 묶어주는 역할을 합니다
+      // 이 경우에는 a[0],
+      // 즉 wordCharCounts를 기준으로 묶어주게 됩니다
       .chunkBy!(a => a[0])
       // 결과물이 한 행의 문자열로 합쳐지게 합니다
       .map!(chunk => format("%d -> %s",

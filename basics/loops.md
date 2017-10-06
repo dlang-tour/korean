@@ -80,8 +80,10 @@ double average(int[] array)
     double accumulator = 0.0;
     while (array.length)
     {
-        // 첫번째 값을 얻기 위해 [0]를 쓰는 대신, .front 를 이용해서 해결할 수 도 있습니다.
-        // 해당 함수는 import std.array : front; 로 임포트 하십시오.
+        // 첫번째 값을 얻기 위해 [0]를 쓰는 대신,
+        // .front 를 이용해서 해결할 수 도 있습니다.
+        // 해당 함수는 import std.array : front; 문으로
+        // 가져올 수 있습니다
         accumulator += array[0];
         array = array[1 .. $];
     }
