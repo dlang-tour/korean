@@ -1,44 +1,48 @@
-# Run D program locally
+# D 언어 프로그램 실행하기(Run D program locally)
 
-D comes with a compiler `dmd`, a script-like run tool `rdmd` and
-a package manager `dub`.
+D 언어의 표준 컴파일러를 설치하면 컴파일러인 `dmd` 와, 의존하는 코드까지 자동으로 컴파일해 프로그램 실행을 도와주는 `rdmd`, 그리고 D 언어 라이브러리를 관리하는 패키지 관리자 `dub` 가 포함되어있습니다.
 
-### DMD Compiler
+### DMD 컴파일러(DMD Compiler)
 
-The *DMD* compiler compiles D file(s) and creates a binary.
-On the command line *DMD* can be invoked with the filename:
+*DMD* 컴파일러는 D 소스코드를 파일로부터 읽어 실행 파일이나 라이브러리 파일을 만듭니다.
+*DMD* 는 기본적으로 파일명을 매개변수로 주고 실행하게 됩니다.
 
+
+```sh
     dmd hello.d
+```
 
-There are many options that allow you to modify the behavior of the *DMD* compiler.
-Browse the [online documentation](https://dlang.org/dmd.html#switches) or run `dmd --help` for an overview of available flags.
+위의 예는 가장 기본적인 실행의 예이고, 실제로 *DMD* 컴파일러에는 컴파일 과정을 변화시킬 수 있는 여러 옵션이 존재합니다.
 
-### On-the-fly compilation with `rdmd`
+각 옵션이 궁금하다면 [온라인 문서](https://dlang.org/dmd.html#switches) 또는 `dmd --help` 를 실행해 확인할 수 있습니다.
 
-The helper tool `rdmd`, distributed with the DMD compiler,
-will make sure to compile all dependencies and automatically runs
-the resulting application:
+### `rdmd` 의 즉석 컴파일(On-the-fly compilation with `rdmd`)
 
+`rdmd` 는 DMD 표준 컴파일러와 함께 제공되는 도구로, 마치 파이썬과 같은 스크립트 언어를 실행하듯 간편하게 D 언어 코드를 실행할 수 있는 도구입니다.
+
+```sh
     rdmd hello.d
+```
 
-On UNIX systems the shebang line `#!/usr/bin/env rdmd` can be put
-on the first line of an executable D file to allow a script-like
-usage.
+유닉스 계열 OS에서는 D 언어 소스코드의 최상단에 `#!/usr/bin/env rdmd` 를 추가해주면 마치 셸 스크립트를 다루듯 이용할 수 있습니다.
 
-Browse the [online documentation](https://dlang.org/rdmd.html) or run `rdmd --help` for for an overview of available flags.
 
-### Package manager `dub`
+[rdmd 문서](https://dlang.org/rdmd.html) 에서 자세한 내용을 확인할 수 있으며, `rdmd --help` 를 실행하여 자주 사용되는 옵션들을 확인할 수 있습니다.
 
-D's standard package manager is [`dub`](http://code.dlang.org). When `dub` is
-installed locally, a new project `hello` can be created using
-the command line:
+### 패키지 관리자(Package manager `dub`)
 
+D 언어의 라이브러리 패키지 관리자의 표준은 [`dub`](http://code.dlang.org) 입니다.
+
+`dub` 은 새 프로젝트를 만드는데도 쓰일 수 있습니다. 예를 들어 `dub` 를 사용해 `hello` 라는 프로젝트를 만드려면,
+
+```sh
     dub init hello
+```
 
-Running `dub` inside this folder will fetch all dependencies, compile the
-application and run it.
-`dub build` will compile the project.
+위와 같이 실행해주면 됩니다.
 
-Browse the [online documentation](https://code.dlang.org/docs/commandline) or run `dub help` for an overview of available commands and features.
+프로젝트 폴더 내에서 `dub` 을 실행하면, 빠진 의존성 라이브러리를 자동으로 받아 설치해주며 최종적으로 원래 구동하려고 했던 애플리케이션까지 자동으로 컴파일하여 실행까지 해줍니다. 단순히 프로젝트를 컴파일만 하고 싶다면 `dub build` 를 사용하면 됩니다.
 
-All available dub packages can be browsed through dub's [web interface](https://code.dlang.org).
+[dub 문서](https://code.dlang.org/docs/commandline) 에서 자세한 내용을 확인할 수 있으며, `dub help` 를 호출하여 자주 사용되는 옵션과 실행방법에 대한 설명을 볼 수 있습니다.
+
+`dub` 를 직접 이용할 수도 있지만, 단순히 패키지에 대한 정보가 필요하다면 [웹사이트](https://code.dlang.org) 에 방문하십시오.
