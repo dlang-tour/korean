@@ -1,38 +1,27 @@
-# Vibe.d web framework
+# Vibe.d 웹 프레임워크(Vibe.d web framework)
 
-[Vibe.d](http://vibed.org) is a very powerful web
-framework which this tour for example has been written
-with. Here are some highlights of vibe.d:
+[Vibe.d](http://vibed.org) 는 현재 보고 있는 D 언어 강좌를 구동하고 있는 강력한 웹 프레임워크입니다.
 
-* Based on a fiber based approach for *asynchronous I/O*
-  vibe.d allows to write high-performance HTTP(S) web servers
-  and web services. Write code which looks synchronous
-  but actually does the ugly asynchronous handling
-  of thousands of connections in the background
-  for you! See the next section for a thorough
-  example.
-* An easy to use JSON and web interface generator
-* Out-of-the-box
-  support for Redis and MongoDB make it easy to
-  write backend systems that have a good performance
-* Generic TCP or UDP clients and servers can be
-  written as well using this framework
+vibe.d 의 특성을 몇가지 살펴보겠습니다.
 
-Note that the examples in this chapter
-can't be run online because they
-would require network support which is disabled
-for obvious security reasons.
+* 멀티쓰레딩 챕터에서 다룬 파이버(Fiber)를 *비동기(asynchronous) 방식 I/O* 에 함께 적용하여 HTTP와 HTTPS 서비스에 있어 높은 성능을 보여줍니다.
+  작성된 코드의 모양은 동기(synchronous) 방식처럼 보이지만 실제론 비동기 방식을 위해 작성된 난잡한 코드의 기존 프레임워크처럼 수많은 네트워크 요청을
+  잘 처리해줍니다. 실제적 예시는 다음 섹션에서 다루겠습니다.
+* JSON 데이터 타입을 다루기 편리하여 웹 인터페이스를 구성하는데 좋습니다.
+* 고성능 백엔드(backend) 서버를 구성을 위해 별다른 작업 없이 Redis와 MongoDB를 지원합니다.
+* HTTP 프로토콜이 아니더라도, 모든 TCP/UDP 클라이언트와 서버에도 어울리는 프레임워크입니다.
 
-The easiest way to create a vibe.d project is to install
-`dub` and create a new project with *vibe.d* specified
-as template:
+이전 강좌들과는 달리, 이번 챕터는 여러 보안상 취약적을 막기 위해 브라우저로 실행하지 못하게 되어있는 강좌입니다.
 
-    dub init <project-name> -t vibe.d
+직접 실습해보려면 번거로워도 vibe.d 프로젝트를 PC에 직접 구성하여 실행해보시기 바랍니다.
 
-`dub` will make sure that vibe.d is downloaded and
-available for building your vibe.d based project.
+가장 간편하게 vibe.d 프로젝트를 위한 기반을 준비하는 방법은 패키지 관리자 `dub` 을 사용해 *vibe.d* 용 기초 프로젝트를 구성하는 것입니다.
 
-The book [D Web development](https://www.packtpub.com/web-development/d-web-development)
-gives a thorough introduction into this great
-framework.
+```bash
+    dub init <프로젝트명> -t vibe.d
+```
+
+`dub` 패키지 관리자가 vibe.d 프레임워크 다운로드와 함께 프로젝트에 기본적으로 필요한 요소를 준비해줄 것입니다
+
+새로운 프레임워크를 공부할 때 온라인 강좌보다 책이 좀 더 필요하다면, [D Web Development](https://www.packtpub.com/web-development/d-web-development) 라는 책을 참고하여 이 멋진 프레임워크에 대한 전반적 구성을 살펴볼 수 있습니다.
 
