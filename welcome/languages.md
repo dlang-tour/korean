@@ -6,7 +6,7 @@ D 언어 강좌는 여러 참여자들 덕분에, 한국어 외의 다양한 언
 - [German - Deutsch](https://tour.dlang.org/tour/de/welcome/welcome-to-d) (번역 진행 중)
 - [Italian - Italiano](https://tour.dlang.org/tour/it/welcome/welcome-to-d) (번역 진행 중)
 - [Japanese - 日本語](https://tour.dlang.org/tour/ja/welcome/welcome-to-d)
-- [Korean - 한국어](https://tour.dlang.org/tour/ko/welcome/welcome-to-d) (번역 진행 중)
+- [Korean - 한국어](https://tour.dlang.org/tour/ko/welcome/welcome-to-d)
 - [Russian - Pусский](https://tour.dlang.org/tour/ru/welcome/welcome-to-d)
 - [Spanish - Español](https://tour.dlang.org/tour/es/welcome/welcome-to-d) (번역 진행 중)
 - [Swedish - Svenska](https://tour.dlang.org/tour/sv/welcome/welcome-to-d) (번역 진행 중)
