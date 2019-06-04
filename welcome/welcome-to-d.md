@@ -1,48 +1,44 @@
-# Welcome to D
+# D 프로그래밍 언어의 세계에 오신 걸 환영합니다.
 
-Welcome to the interactive tour of the *D Programming language*.
+직접 코드를 입력하고 실행해보며 배울 수 있는 *D 언어* 강좌에 오신 걸 환영합니다.
 
 {{#dmanmobile}}
 
-The tour gives an overview of this __powerful__ and __expressive__
-language which compiles directly to __efficient__, __native__ machine code.
+이 강좌를 통해서 __효율적으로 동작__하는 __실행파일(EXE 파일처럼)__을 만들어주는, __강력__하며 __인상적인__ D 언어의 전체적 특징을 살펴볼 수 있습니다.
 
 {{/dmanmobile}}
 
-### What is D?
-
-D is the culmination of _decades of experience implementing compilers_
-for many diverse languages and has a unique set of features:
+### D 언어란 무엇입니까?
+D 언어는 _현재까지 구현된 컴파일러에 담긴 지식_ 을 다양한 언어로부터 모아 만들어진 언어입니다. 그에 따라서, 다양한 언어에서 나타나는 특성이 나타납니다.
 
 {{#dmandesktop}}
 
-- _high level_ constructs for great modeling power
-- _high performance_, compiled language
-- static typing
-- direct interface to the operating system API's and hardware
-- blazingly fast compile-times
-- memory-safe subset (SafeD)
-- _maintainable_, _easy to understand_ code
-- gradual learning curve (C-like syntax, similar to Java and others)
-- compatible with C application binary interface
-- limited compatibility with C++ application binary interface
-- multi-paradigm (imperative, structured, object oriented, generic, functional programming purity, and even assembly)
-- built-in error detection (contracts, unittests)
+- _고수준_ 모델링 지원을 위한 기반을 제공합니다.
+- 실행 전 컴파일을 미리 해둬야하는 언어이며, _높은 성능_을 보여줍니다.
+- 정적 타입(static typing) 특성을 갖습니다. 모든 타입은 컴파일 시점 전에 결정됩니다. 예를 들어, 값을 반환하는 함수 등에서 어떤 타입을 반환하는지 명확히 알 수 있습니다.
+- 운영체제와 하드웨어가 제공하는 API를 직접 제어할 수 있습니다.
+- 컴파일에 드는 소요시간이 짧습니다.
+- 메모리 안전을 보장하는 제한된 D 언어 환경을 제공합니다. (SafeD)
+- _프로그램 유지 및 보수에 편리_ 하며, _이해하는데 어려움이 없는_ 코드를 작성할 수 있습니다.
+- 갑자기 어려워지는 부분 없이, 일정한 코딩 난이도 상승 속에서 배워 갈 수 있는 언어입니다. (C나 Java와 비슷한 문법 구조)
+- C 응용 프로그램/라이브러리와의 호환성을 갖습니다.
+- C++ 응용 프로그램/라이브러리와의 제한적 호환성을 갖습니다.
+- 다양한 [프로그래밍 패러다임](https://en.wikipedia.org/wiki/Programming_paradigm)을 포함하고 있습니다. (명령형, 구조형, 객체지향, 제너릭, 함수형 프로그래밍, 어셈블리)
+- 언어에 내장된 오류 탐지 기능이 있습니다.(Contracts, 유닛 테스트)
 
-... and many more [features](http://dlang.org/overview.html).
+더 자세한 내용은 [D 언어 특성(영문)](http://dlang.org/overview.html)에서 살펴보실 수 있습니다.
 
 {{/dmandesktop}}
 
-### About the tour
+### 강좌의 특성
 
-Each section comes with a source code example that can be modified and used
-to experiment with D's language features.
-Click the run button (or `Ctrl-enter`) to compile and run it.
+각 섹션에는 D 언어의 특성을 직접 테스트 해볼 수 있는 예제 코드와 웹 실행 환경이 제공되고 있습니다. 별도의 개발환경 구성이 필요하지 않습니다.
 
-### Contributing
+_run_ 버튼을 누르거나, 키보드의 `Ctrl`(컨트롤 키)와 `Enter`(엔터 키)를 함께 눌러 웹 환경에서 바로 컴파일하여 실행하고, 결과를 확인할 수 있습니다.
 
-This tour is [open source](https://github.com/dlang-tour)
-and we welcome pull requests making this tour even better.
+### 더 나은 강좌를 위한 참여 부탁
+
+이 강좌는 원본 문서가 제공되는 [오픈소스 프로젝트](https://github.com/dlang-tour) 입니다. 개선하고 싶은 부분이 있거나, 더욱 발전시키고 싶다면 망설이지 말고 풀 리퀘스트(Pull request)를 작성하여 요청해주십시오. 언제든 여러분의 참여를 기다리고 있습니다.
 
 ## {SourceCode}
 
@@ -53,19 +49,22 @@ import std.range;
 
 void main()
 {
-    // Let's get going!
-    writeln("Hello World!");
-    
-    // An example for experienced programmers:
-    // Take three arrays, and without allocating
-    // any new memory, sort across all the
-    // arrays inplace
+    // 가장 기본이 되는 코드를 통해 D 언어의 세계로 출발해 봅시다.
+    writeln("안녕, 세상아!");
+
+    // 다른 프로그래밍 언어를 사용해본 경험자를 위한 예제:
+    // 아래 코드는 별도의 메모리 할당 작업 없이,
+    // 숫자가 담긴 Array 3개를 만듭니다.
+    // 그리고 3개의 Array를 원래 하나의 Array였던 것처럼 간주하고,
+    // sort() 함수가 Array와 Array를 오가며,
+    // 숫자를 오름차순으로 정렬합니다.
     int[] arr1 = [4, 9, 7];
     int[] arr2 = [5, 2, 1, 10];
     int[] arr3 = [6, 8, 3];
     sort(chain(arr1, arr2, arr3));
     writefln("%s\n%s\n%s\n", arr1, arr2, arr3);
-    // To learn more about this example, see the
-    // "Range algorithms" page under "Gems"
+    // 이 예제를 한번에 이해하기에 어려울 수 있습니다.
+    // 자세한 설명은 "D 언어 실전" 단원의
+    // "Range algorithms" 를 통해 확인할 수 있습니다.
 }
 ```
